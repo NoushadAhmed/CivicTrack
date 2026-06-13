@@ -70,3 +70,15 @@ Register Page
 Citizen Dashboard
 Officer Dashboard
 Admin Dashboard
+
+
+## Live Demo
+
+🌐 Frontend:
+https://civic-track-k6dodxiku-noushadahmeds-projects.vercel.app
+
+⚙️ Backend API:
+https://civictrack-backend-rtas.onrender.com
+
+📂 GitHub:
+https://github.com/NoushadAhmed/CivicTrack
