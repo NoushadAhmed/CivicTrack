@@ -61,3 +61,12 @@ Admin Assigns Officer
 Officer Resolves Complaint
 ↓
 Citizen Tracks Status
+
+
+# Screenshots
+Home Page
+Login Page
+Register Page
+Citizen Dashboard
+Officer Dashboard
+Admin Dashboard
