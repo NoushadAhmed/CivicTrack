@@ -15,29 +15,22 @@ export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        const params = new URLSearchParams(window.location.search);
-        const token = params.get("token");
-
-        if (token) {
-            localStorage.setItem("token", token);
-
-            window.history.replaceState({}, document.title, "/login");
-
-            navigate("/citizen");
-        }
-    }, [navigate]);
-
     // Handle Google OAuth redirect
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
-
         const token = params.get("token");
 
         if (token) {
             localStorage.setItem("token", token);
+
+            // Remove token from URL
+            window.history.replaceState(
+                {},
+                document.title,
+                "/login"
+            );
+
+            toast.success("Google Login Successful");
 
             navigate("/citizen");
         }
@@ -95,7 +88,7 @@ export default function Login() {
 
             <div className="absolute bottom-20 right-20 w-96 h-96 rounded-full bg-cyan-300 blur-3xl opacity-30"></div>
 
-            {/* Login Card */}
+            {/* Card */}
             <motion.div
                 initial={{
                     opacity: 0,
@@ -127,7 +120,6 @@ export default function Login() {
 
                         {/* Email */}
                         <div>
-
                             <label className="text-sm text-slate-600">
                                 Email
                             </label>
@@ -142,18 +134,15 @@ export default function Login() {
                                 required
                                 className="w-full mt-2 px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                             />
-
                         </div>
 
                         {/* Password */}
                         <div>
-
                             <label className="text-sm text-slate-600">
                                 Password
                             </label>
 
                             <div className="relative">
-
                                 <input
                                     type={
                                         showPassword
@@ -184,9 +173,7 @@ export default function Login() {
                                         ? "Hide"
                                         : "Show"}
                                 </button>
-
                             </div>
-
                         </div>
 
                         {/* Login Button */}
@@ -205,26 +192,28 @@ export default function Login() {
                     {/* Divider */}
                     <div className="flex items-center my-6">
                         <div className="flex-1 border-t"></div>
+
                         <span className="px-4 text-sm text-slate-400">
                             OR
                         </span>
+
                         <div className="flex-1 border-t"></div>
                     </div>
 
+                    {/* Google Login */}
                     <button
                         type="button"
                         onClick={() =>
                             window.location.href =
                             "https://civictrack-backend-rtas.onrender.com/api/auth/google"
                         }
-                        className="w-full mt-4 py-3 rounded-xl border border-gray-300 bg-white hover:bg-gray-100"
+                        className="w-full py-3 rounded-xl border border-gray-300 bg-white hover:bg-gray-100 transition"
                     >
                         Continue with Google
                     </button>
 
                     {/* Register */}
                     <p className="mt-6 text-center text-slate-500">
-
                         Don't have an account?{" "}
 
                         <Link
@@ -233,7 +222,6 @@ export default function Login() {
                         >
                             Register
                         </Link>
-
                     </p>
 
                 </div>
