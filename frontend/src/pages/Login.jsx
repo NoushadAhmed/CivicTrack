@@ -17,20 +17,25 @@ export default function Login() {
 
     // Handle Google OAuth redirect
     useEffect(() => {
-        const params = new URLSearchParams(window.location.search);
-        const token = params.get("token");
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+        const token =
+            params.get("token");
 
         if (token) {
-            localStorage.setItem("token", token);
+            localStorage.setItem(
+                "token",
+                token
+            );
 
-            // Remove token from URL
             window.history.replaceState(
                 {},
                 document.title,
-                "/login"
+                "/"
             );
-
-            toast.success("Google Login Successful");
 
             navigate("/citizen");
         }

@@ -7,8 +7,7 @@ import {
 
 import API from "../services/api";
 
-const AuthContext =
-  createContext();
+const AuthContext = createContext();
 
 export const AuthProvider = ({
   children,
@@ -20,33 +19,42 @@ export const AuthProvider = ({
     useState(true);
 
   useEffect(() => {
-    const loadUser =
-      async () => {
-        try {
-          const token =
-            localStorage.getItem(
-              "token"
-            );
+    const loadUser = async () => {
+      try {
+        const token =
+          localStorage.getItem("token");
 
-          if (!token) {
-            setLoading(false);
-            return;
-          }
-
-          const res =
-            await API.get(
-              "/auth/profile"
-            );
-
-          setUser(res.data.user);
-        } catch (error) {
-          localStorage.removeItem(
-            "token"
-          );
+        if (!token) {
+          setLoading(false);
+          return;
         }
 
+        const res =
+          await API.get(
+            "/auth/profile"
+          );
+
+        console.log(
+          "PROFILE DATA:",
+          res.data
+        );
+
+        setUser(
+          res.data.user ||
+            res.data
+        );
+      } catch (error) {
+        console.error(error);
+
+        localStorage.removeItem(
+          "token"
+        );
+
+        setUser(null);
+      } finally {
         setLoading(false);
-      };
+      }
+    };
 
     loadUser();
   }, []);
