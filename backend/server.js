@@ -13,7 +13,7 @@ const authRoutes = require("./routes/authRoutes");
 const complaintRoutes = require("./routes/complaintRoutes");
 
 // Connect Database
-connectDB();
+//connectDB();
 
 const app = express();
 
@@ -64,6 +64,18 @@ app.get("/env-test", (req, res) => {
 // Start Server
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+const startServer = async () => {
+  try {
+    await connectDB();
+
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+
+  } catch (error) {
+    console.error("Database connection failed:", error);
+    process.exit(1);
+  }
+};
+
+startServer();
