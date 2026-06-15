@@ -51,6 +51,8 @@ export const AuthProvider = ({
     loadUser();
   }, []);
 
+
+  
   return (
     <AuthContext.Provider
       value={{
