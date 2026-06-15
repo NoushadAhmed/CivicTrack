@@ -8,24 +8,23 @@ import {
   FaBars,
 } from "react-icons/fa";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useAuth } from "../context/AuthContext";
 import { useState } from "react";
 
 export default function Sidebar() {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
 
   const [open, setOpen] =
     useState(false);
 
-  const logout = () => {
-    localStorage.removeItem(
-      "token"
-    );
+  const navigate = useNavigate();
 
-    window.location.href =
-      "/login";
+  const logout = () => {
+    localStorage.removeItem("token");
+    setUser(null);
+    navigate("/");
   };
 
   return (
