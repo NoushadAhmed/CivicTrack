@@ -15,6 +15,21 @@ export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const token = params.get("token");
+
+        if (token) {
+            localStorage.setItem("token", token);
+
+            window.history.replaceState({}, document.title, "/login");
+
+            navigate("/citizen");
+        }
+    }, [navigate]);
+
     // Handle Google OAuth redirect
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
@@ -196,14 +211,13 @@ export default function Login() {
                         <div className="flex-1 border-t"></div>
                     </div>
 
-                    {/* Google Login */}
                     <button
                         type="button"
                         onClick={() =>
                             window.location.href =
                             "https://civictrack-backend-rtas.onrender.com/api/auth/google"
                         }
-                        className="w-full py-3 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 font-medium transition"
+                        className="w-full mt-4 py-3 rounded-xl border border-gray-300 bg-white hover:bg-gray-100"
                     >
                         Continue with Google
                     </button>

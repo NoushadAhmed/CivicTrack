@@ -1,3 +1,4 @@
+import { useRef, useEffect } from "react";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -160,6 +161,21 @@ function Floating3DBackground() {
 
 export default function Home() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
+
+    if (token) {
+      localStorage.setItem("token", token);
+
+      // remove token from URL
+      window.history.replaceState({}, document.title, "/");
+
+      navigate("/citizen");
+    }
+  }, [navigate]);
+
   const featuresRef = useRef(null);
 
   const scrollToFeatures = () => {
