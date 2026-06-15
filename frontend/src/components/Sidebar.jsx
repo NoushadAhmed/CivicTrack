@@ -184,9 +184,9 @@ export default function Sidebar() {
 
           <button
             onClick={logout}
-            className="w-full bg-red-500 text-white py-3 rounded-xl"
+            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border border-cyan-200 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold shadow-lg shadow-cyan-500/20 transition duration-300 hover:-translate-y-0.5 hover:from-blue-600 hover:to-indigo-700 hover:shadow-xl hover:shadow-blue-700/30"
           >
-            <FaSignOutAlt className="inline mr-2" />
+            <FaSignOutAlt />
             Logout
           </button>
 
