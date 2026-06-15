@@ -35,12 +35,12 @@ export default function AssignOfficers() {
 
         const cVal =
           complaintsRes.status === "fulfilled"
-            ? complaintsRes.data?.complaints ?? complaintsRes.data?.complaint ?? complaintsRes.data
+            ? complaintsRes.value?.data?.complaints ?? complaintsRes.value?.data
             : [];
 
         const oVal =
           officersRes.status === "fulfilled"
-            ? officersRes.data?.users ?? officersRes.data?.user ?? officersRes.data
+            ? officersRes.value?.data?.users ?? officersRes.value?.data
             : [];
 
 

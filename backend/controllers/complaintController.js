@@ -155,41 +155,31 @@ const deleteComplaint = async (req, res) => {
 
 const getComplaintStats = async (req, res) => {
     try {
+        const User = require("../models/User");
 
-        const totalComplaints =
-            await Complaint.countDocuments();
-
-        const pending =
-            await Complaint.countDocuments({
-                status: "Pending"
-            });
-
-        const inProgress =
-            await Complaint.countDocuments({
-                status: "In Progress"
-            });
-
-        const resolved =
-            await Complaint.countDocuments({
-                status: "Resolved"
-            });
+        const [totalComplaints, pending, inProgress, resolved, activeOfficers, registeredCitizens] =
+            await Promise.all([
+                Complaint.countDocuments(),
+                Complaint.countDocuments({ status: "Pending" }),
+                Complaint.countDocuments({ status: "In Progress" }),
+                Complaint.countDocuments({ status: "Resolved" }),
+                User.countDocuments({ role: "officer" }),
+                User.countDocuments({ role: "citizen" }),
+            ]);
 
         res.status(200).json({
             success: true,
             totalComplaints,
             pending,
             inProgress,
-            resolved
+            resolved,
+            activeOfficers,
+            registeredCitizens
         });
 
     } catch (error) {
-
         console.error(error);
-
-        res.status(500).json({
-            success: false,
-            message: "Server Error"
-        });
+        res.status(500).json({ success: false, message: "Server Error" });
     }
 };
 

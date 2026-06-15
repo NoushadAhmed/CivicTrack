@@ -28,12 +28,19 @@ router.post(
 // Get all complaints
 router.get("/", protect, getAllComplaints);
 
-// Stats route MUST come before /:id
+// Static routes MUST come before /:id
 router.get(
     "/stats",
     protect,
     authorize("admin"),
     getComplaintStats
+);
+
+router.get(
+    "/officer/assigned",
+    protect,
+    authorize("officer"),
+    getAssignedComplaints
 );
 
 // Get complaint by ID
@@ -60,11 +67,5 @@ router.put(
     protect,
     authorize("admin"),
     assignOfficer
-);
-router.get(
-    "/officer/assigned",
-    protect,
-    authorize("officer"),
-    getAssignedComplaints
 );
 module.exports = router;
