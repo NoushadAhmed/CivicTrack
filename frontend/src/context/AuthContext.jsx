@@ -29,28 +29,20 @@ export const AuthProvider = ({
           return;
         }
 
-        const res =
-          await API.get(
-            "/auth/profile"
-          );
+        const res = await API.get("/auth/profile");
 
-        console.log(
-          "PROFILE DATA:",
-          res.data
-        );
+        console.log("PROFILE RESPONSE:", res.data);
 
-        setUser(
-          res.data.user ||
-            res.data
-        );
+        setUser(res.data.user);
       } catch (error) {
-        console.error(error);
-
-        localStorage.removeItem(
-          "token"
+        console.error(
+          "PROFILE ERROR:",
+          error.response?.data || error
         );
 
+        localStorage.removeItem("token");
         setUser(null);
+
       } finally {
         setLoading(false);
       }
