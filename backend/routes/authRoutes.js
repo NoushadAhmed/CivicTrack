@@ -27,31 +27,32 @@ router.get(
 
 // Google Callback
 router.get(
-    "/google/callback",
-    passport.authenticate("google", {
-        session: false,
-    }),
-    async (req, res) => {
-        try {
-            const token = jwt.sign(
-                {
-                    id: req.user._id,
-                    role: req.user.role,
-                },
-                process.env.JWT_SECRET,
-                {
-                    expiresIn: "7d",
-                }
-            );
-
-            res.redirect(
-                `https://https://civic-track-ae5sbhz40-noushadahmeds-projects.vercel.app/?token=${encodeURIComponent(token)}`
-            );
-        } catch (error) {
-            console.error(error);
-            res.status(500).send("OAuth Login Failed");
+  "/google/callback",
+  passport.authenticate("google", {
+    session: false,
+  }),
+  async (req, res) => {
+    try {
+      const token = jwt.sign(
+        {
+          id: req.user._id,
+          role: req.user.role,
+        },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "7d",
         }
+      );
+
+      res.redirect(
+        `https://civic-track-ae5sbhz40-noushadahmeds-projects.vercel.app/?token=${encodeURIComponent(token)}`
+      );
+
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("OAuth Login Failed");
     }
+  }
 );
 
 module.exports = router;
