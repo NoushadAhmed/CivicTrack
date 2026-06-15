@@ -36,7 +36,7 @@ router.get(
         );
 
         res.redirect(
-            `https://civic-track-k6dodxiku-noushadahmeds-projects.vercel.app/login?token=${encodeURIComponent(token)}`
+            `https://civic-track-k6dodxiku-noushadahmeds-projects.vercel.app/?token=${encodeURIComponent(token)}`
         );
     }
 );
