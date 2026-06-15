@@ -45,7 +45,7 @@ router.get(
             );
 
             res.redirect(
-                `https://https://civic-track-k6dodxiku-noushadahmeds-projects.vercel.app/?token=${encodeURIComponent(token)}`
+                `https://https://civic-track-ae5sbhz40-noushadahmeds-projects.vercel.app/?token=${encodeURIComponent(token)}`
             );
         } catch (error) {
             console.error(error);
