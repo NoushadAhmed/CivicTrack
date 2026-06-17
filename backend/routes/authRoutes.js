@@ -7,9 +7,9 @@ const jwt = require("jsonwebtoken");
 const protect = require("../middleware/authMiddleware");
 
 const {
-    registerUser,
-    loginUser,
-    getProfile,
+  registerUser,
+  loginUser,
+  getProfile,
 } = require("../controllers/authController");
 
 // Normal Auth
@@ -19,10 +19,10 @@ router.get("/profile", protect, getProfile);
 
 // Google Login
 router.get(
-    "/google",
-    passport.authenticate("google", {
-        scope: ["profile", "email"],
-    })
+  "/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+  })
 );
 
 // Google Callback
@@ -45,7 +45,7 @@ router.get(
       );
 
       res.redirect(
-        `https://civic-track-ae5sbhz40-noushadahmeds-projects.vercel.app/?token=${encodeURIComponent(token)}`
+        `https://civic-track-ae5sbhz40-noushadahmeds-projects.vercel.app/citizen?token=${encodeURIComponent(token)}`
       );
 
     } catch (error) {

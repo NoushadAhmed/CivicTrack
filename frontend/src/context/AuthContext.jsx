@@ -21,28 +21,26 @@ export const AuthProvider = ({
   useEffect(() => {
     const loadUser = async () => {
       try {
-        const token =
-          localStorage.getItem("token");
+        // ✅ Capture Google OAuth token from URL
+        const params = new URLSearchParams(window.location.search);
+        const urlToken = params.get('token');
+        if (urlToken) {
+          localStorage.setItem('token', urlToken);
+          window.history.replaceState({}, '', window.location.pathname);
+        }
 
+        const token = localStorage.getItem("token");
         if (!token) {
           setLoading(false);
           return;
         }
 
         const res = await API.get("/auth/profile");
-
-        console.log("PROFILE RESPONSE:", res.data);
-
         setUser(res.data.user);
       } catch (error) {
-        console.error(
-          "PROFILE ERROR:",
-          error.response?.data || error
-        );
-
+        console.error("PROFILE ERROR:", error.response?.data || error);
         localStorage.removeItem("token");
         setUser(null);
-
       } finally {
         setLoading(false);
       }
@@ -52,7 +50,7 @@ export const AuthProvider = ({
   }, []);
 
 
-  
+
   return (
     <AuthContext.Provider
       value={{
