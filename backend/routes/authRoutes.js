@@ -1,16 +1,9 @@
 const express = require("express");
 const router = express.Router();
-
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
-
 const protect = require("../middleware/authMiddleware");
-
-const {
-  registerUser,
-  loginUser,
-  getProfile,
-} = require("../controllers/authController");
+const { registerUser, loginUser, getProfile } = require("../controllers/authController");
 
 // Normal Auth
 router.post("/register", registerUser);
@@ -28,26 +21,19 @@ router.get(
 // Google Callback
 router.get(
   "/google/callback",
-  passport.authenticate("google", {
-    session: false,
-  }),
+  passport.authenticate("google", { session: false }),
   async (req, res) => {
     try {
       const token = jwt.sign(
-        {
-          id: req.user._id,
-          role: req.user.role,
-        },
+        { id: req.user._id, role: req.user.role },
         process.env.JWT_SECRET,
-        {
-          expiresIn: "7d",
-        }
+        { expiresIn: "7d" }
       );
 
+      // ✅ Uses CLIENT_URL env var — works for both local and production
       res.redirect(
-        `https://civic-track-ae5sbhz40-noushadahmeds-projects.vercel.app/citizen?token=${encodeURIComponent(token)}`
+        `${process.env.CLIENT_URL}/citizen?token=${encodeURIComponent(token)}`
       );
-
     } catch (error) {
       console.error(error);
       res.status(500).send("OAuth Login Failed");

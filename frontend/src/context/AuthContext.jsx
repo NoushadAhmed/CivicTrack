@@ -1,32 +1,21 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-
+import { createContext, useContext, useEffect, useState } from "react";
 import API from "../services/api";
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({
-  children,
-}) => {
-  const [user, setUser] =
-    useState(null);
-
-  const [loading, setLoading] =
-    useState(true);
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadUser = async () => {
       try {
         // ✅ Capture Google OAuth token from URL
         const params = new URLSearchParams(window.location.search);
-        const urlToken = params.get('token');
+        const urlToken = params.get("token");
         if (urlToken) {
-          localStorage.setItem('token', urlToken);
-          window.history.replaceState({}, '', window.location.pathname);
+          localStorage.setItem("token", urlToken);
+          window.history.replaceState({}, "", window.location.pathname);
         }
 
         const token = localStorage.getItem("token");
@@ -49,20 +38,16 @@ export const AuthProvider = ({
     loadUser();
   }, []);
 
-
+  const logout = () => {
+    localStorage.removeItem("token");
+    setUser(null);
+  };
 
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        setUser,
-        loading,
-      }}
-    >
+    <AuthContext.Provider value={{ user, setUser, loading, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () =>
-  useContext(AuthContext);
+export const useAuth = () => useContext(AuthContext);
